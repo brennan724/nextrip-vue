@@ -22,3 +22,7 @@ yarn lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+
+### Bugs!!!
+https://github.com/vuematerial/vue-material/issues/2285

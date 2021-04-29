@@ -2,7 +2,7 @@
   <div id="dropdown">
     <md-field class="dropdownButton">
       <label for="selected">Select</label>
-      <md-select v-model="selected" name="foo">
+      <md-select v-model="dropdownValue" name="foo">
         <md-option
           v-for="item in populateDropdown"
           :key="item.id"
@@ -18,24 +18,32 @@
 <script>
 export default {
   name: "Dropdown",
-  props: ["dropdownData"],
+  props: ["dropdownData", "selected"],
   data() {
     return {
-      selected: "",
+      // selected: "",
     };
   },
   computed: {
     populateDropdown() {
       return this.dropdownData;
     },
+    dropdownValue: {
+      get() {
+        return this.selected;
+      },
+      set(val) {
+        this.$emit("clicked", val);
+      },
+    },
   },
   watch: {
-    selected() {
-      console.log(this.selected);
-      // this.selected = item.label;
-      // this.$emit("clicked", item.id);
-      this.$emit("clicked", this.selected);
-    },
+    // selected() {
+    //   console.log(this.selected);
+    //   // this.selected = item.label;
+    //   // this.$emit("clicked", item.id);
+    //   this.$emit("clicked", this.selected);
+    // },
   },
   methods: {
     setDropdown(item) {
@@ -51,13 +59,5 @@ export default {
 .dropdownButton {
   width: 20%;
   margin: auto;
-}
-.dropdownValues {
-  border: 2px solid black;
-  width: 10em;
-  position: float;
-}
-.dropdownValue:hover {
-  background: lightgray;
 }
 </style>

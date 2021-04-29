@@ -1,7 +1,11 @@
 <template>
   <div id="app">
     Welcome to the NexTrip API Knock-off
-    <dropdown :dropdownData="routeData" @clicked="setRoute" />
+    <dropdown
+      :dropdownData="routeData"
+      @clicked="setRoute"
+      :selected.sync="route"
+    />
     <dropdown
       :dropdownData="directionData"
       @clicked="setDirection"
