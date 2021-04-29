@@ -1,11 +1,7 @@
 <template>
   <div id="app">
-    Welcome to the NexTrip API Knock-off
-    <dropdown
-      :dropdownData="routeData"
-      @clicked="setRoute"
-      :selected.sync="route"
-    />
+    <h1>Welcome to the NexTrip API Knock-off</h1>
+    <dropdown :dropdownData="routeData" @clicked="setRoute" />
     <dropdown
       :dropdownData="directionData"
       @clicked="setDirection"
@@ -16,16 +12,22 @@
       @clicked="setStop"
       v-show="direction !== ''"
     />
+    <display
+      class="display"
+      :displayInfo="this.displayInfo"
+      v-if="displayInfo !== undefined"
+    />
   </div>
 </template>
 
 <script>
 import dropdown from "./components/dropdown.vue";
 import axios from "axios";
+import display from "./components/display.vue";
 
 const url = `https://svc.metrotransit.org/nextripv2`;
 export default {
-  components: { dropdown },
+  components: { dropdown, display },
   name: "App",
   data: function () {
     return {
@@ -35,7 +37,7 @@ export default {
       direction: "",
       stopData: [],
       stop: "",
-      displayInfo: {},
+      displayInfo: undefined,
     };
   },
   methods: {
@@ -115,5 +117,12 @@ export default {
 
 .md-layout-item {
   width: 10em;
+}
+
+.display {
+  padding-top: 50px;
+  padding-bottom: 50px;
+  width: 80%;
+  margin: auto;
 }
 </style>

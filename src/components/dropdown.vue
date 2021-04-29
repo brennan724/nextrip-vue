@@ -18,7 +18,7 @@
 <script>
 export default {
   name: "Dropdown",
-  props: ["dropdownData", "selected"],
+  props: ["dropdownData"],
   data() {
     return {
       // selected: "",
