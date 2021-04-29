@@ -1,7 +1,8 @@
 <template>
   <div id="dropdown">
     <md-field class="dropdownButton">
-      <md-select v-model="selected">
+      <label for="selected">Select</label>
+      <md-select v-model="selected" name="foo">
         <md-option
           v-for="item in populateDropdown"
           :key="item.id"
@@ -11,19 +12,6 @@
         </md-option>
       </md-select>
     </md-field>
-    <!-- <md-button class="dropdownButton" @click="toggle">
-      {{ selected || "Choose a value" }}
-    </md-button>
-    <div class="dropdownValues" v-if="active">
-      <div
-        class="dropdownValue"
-        v-for="item in populateDropdown"
-        :key="item.id"
-        @click="setDropdown(item)"
-      >
-        {{ item.label }}
-      </div>
-    </div> -->
   </div>
 </template>
 
@@ -33,7 +21,6 @@ export default {
   props: ["dropdownData"],
   data() {
     return {
-      active: false,
       selected: "",
     };
   },
@@ -42,10 +29,15 @@ export default {
       return this.dropdownData;
     },
   },
-  methods: {
-    toggle() {
-      this.active = !this.active;
+  watch: {
+    selected() {
+      console.log(this.selected);
+      // this.selected = item.label;
+      // this.$emit("clicked", item.id);
+      this.$emit("clicked", this.selected);
     },
+  },
+  methods: {
     setDropdown(item) {
       this.selected = item.label;
       this.$emit("clicked", item.id);
@@ -57,9 +49,8 @@ export default {
 
 <style scoped>
 .dropdownButton {
-  border: 2px solid black;
-  width: 20em;
-  position: float;
+  width: 20%;
+  margin: auto;
 }
 .dropdownValues {
   border: 2px solid black;

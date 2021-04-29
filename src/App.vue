@@ -1,23 +1,17 @@
 <template>
   <div id="app">
     Welcome to the NexTrip API Knock-off
-    <div class="md-layout" id="selectionArea">
-      <dropdown
-        class="md-layout-item"
-        :dropdownData="routeData"
-        @clicked="setRoute"
-      />
-      <dropdown
-        class="md-layout-item"
-        :dropdownData="directionData"
-        @clicked="setDirection"
-      />
-      <dropdown
-        class="md-layout-item"
-        :dropdownData="stopData"
-        @clicked="setStop"
-      />
-    </div>
+    <dropdown :dropdownData="routeData" @clicked="setRoute" />
+    <dropdown
+      :dropdownData="directionData"
+      @clicked="setDirection"
+      v-show="route !== ''"
+    />
+    <dropdown
+      :dropdownData="stopData"
+      @clicked="setStop"
+      v-show="direction !== ''"
+    />
   </div>
 </template>
 
@@ -113,5 +107,9 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+
+.md-layout-item {
+  width: 10em;
 }
 </style>
