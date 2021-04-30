@@ -22,6 +22,11 @@
       @routeInfo="setDisplayInfo"
       v-if="this.searchPattern === 'route'"
     />
+    <by-stop
+      class="stopSelection"
+      @stopInfo="setDisplayInfo"
+      v-if="this.searchPattern === 'stop'"
+    />
     <display
       class="display"
       :displayInfo="this.displayInfo"
@@ -32,10 +37,11 @@
 
 <script>
 import byRoute from "./components/byRoute.vue";
+import byStop from "./components/byStop.vue";
 import display from "./components/display.vue";
 
 export default {
-  components: { byRoute, display },
+  components: { byRoute, byStop, display },
   name: "App",
   data() {
     return {
@@ -50,6 +56,7 @@ export default {
     },
     changeSearch(val) {
       this.searchPattern = val;
+      this.displayInfo = undefined;
     },
   },
 };
@@ -75,11 +82,13 @@ export default {
   display: inline-block;
   border: 1px solid black;
   width: 7em;
+  cursor: pointer;
 }
 .stopButton {
   display: inline-block;
   border: 1px solid black;
   width: 7em;
+  cursor: pointer;
 }
 
 .selected {
