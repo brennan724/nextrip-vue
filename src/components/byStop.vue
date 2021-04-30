@@ -58,4 +58,14 @@ export default {
   width: 15em;
   margin: auto;
 }
+
+.error {
+  color: white;
+  font-size: 30px;
+  background-color: red;
+  height: 3em;
+  width: 50%;
+  margin: auto;
+  padding-top: 1em;
+}
 </style>
