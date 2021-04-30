@@ -20,9 +20,7 @@ export default {
   name: "Dropdown",
   props: ["dropdownData"],
   data() {
-    return {
-      // selected: "",
-    };
+    return {};
   },
   computed: {
     populateDropdown() {
@@ -35,21 +33,6 @@ export default {
       set(val) {
         this.$emit("clicked", val);
       },
-    },
-  },
-  watch: {
-    // selected() {
-    //   console.log(this.selected);
-    //   // this.selected = item.label;
-    //   // this.$emit("clicked", item.id);
-    //   this.$emit("clicked", this.selected);
-    // },
-  },
-  methods: {
-    setDropdown(item) {
-      this.selected = item.label;
-      this.$emit("clicked", item.id);
-      this.toggle();
     },
   },
 };

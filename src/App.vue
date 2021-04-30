@@ -1,16 +1,26 @@
 <template>
   <div id="app">
     <h1>Welcome to the NexTrip API Knock-off</h1>
-    <dropdown :dropdownData="routeData" @clicked="setRoute" />
-    <dropdown
-      :dropdownData="directionData"
-      @clicked="setDirection"
-      v-show="route !== ''"
-    />
-    <dropdown
-      :dropdownData="stopData"
-      @clicked="setStop"
-      v-show="direction !== ''"
+    <div class="searchType">
+      <div
+        class="routeButton"
+        :class="this.searchPattern === 'route' ? 'selected' : undefined"
+        @click="changeSearch('route')"
+      >
+        By Route
+      </div>
+      <div
+        class="stopButton"
+        :class="this.searchPattern === 'stop' ? 'selected' : undefined"
+        @click="changeSearch('stop')"
+      >
+        By Stop #
+      </div>
+    </div>
+    <by-route
+      class="routeSelection"
+      @routeInfo="setDisplayInfo"
+      v-if="this.searchPattern === 'route'"
     />
     <display
       class="display"
@@ -21,86 +31,26 @@
 </template>
 
 <script>
-import dropdown from "./components/dropdown.vue";
-import axios from "axios";
+import byRoute from "./components/byRoute.vue";
 import display from "./components/display.vue";
 
-const url = `https://svc.metrotransit.org/nextripv2`;
 export default {
-  components: { dropdown, display },
+  components: { byRoute, display },
   name: "App",
-  data: function () {
+  data() {
     return {
-      routeData: [],
-      route: "",
-      directionData: [],
-      direction: "",
-      stopData: [],
-      stop: "",
       displayInfo: undefined,
+      searchPattern: "route",
     };
   },
   methods: {
-    setRoute(route_id) {
-      this.route = route_id;
-      console.log(this.route);
-      this.getDirections();
+    setDisplayInfo(val) {
+      this.displayInfo = val;
+      console.log(this.displayInfo);
     },
-    setDirection(direction_id) {
-      this.direction = direction_id;
-      console.log(this.direction);
-      this.getStops();
+    changeSearch(val) {
+      this.searchPattern = val;
     },
-    setStop(stop_id) {
-      this.stop = stop_id;
-      console.log(this.stop);
-      this.getRouteStopInfo();
-    },
-    getRoute() {
-      axios
-        .get(`${url}/routes`)
-        .then((response) => {
-          this.routeData = response.data.map((route) => {
-            return { id: route.route_id, label: route.route_label };
-          });
-          console.log(this.routeData);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    },
-    getDirections() {
-      axios.get(`${url}/directions/${this.route}`).then((response) => {
-        this.directionData = response.data.map((direction) => {
-          return {
-            id: direction.direction_id,
-            label: direction.direction_name,
-          };
-        });
-        console.log(this.directionData);
-      });
-    },
-    getStops() {
-      axios
-        .get(`${url}/stops/${this.route}/${this.direction}`)
-        .then((response) => {
-          this.stopData = response.data.map((stop) => {
-            return { id: stop.place_code, label: stop.description };
-          });
-          console.log(this.stopData);
-        });
-    },
-    getRouteStopInfo() {
-      axios
-        .get(`${url}/${this.route}/${this.direction}/${this.stop}`)
-        .then((response) => {
-          console.log(response.data);
-          this.displayInfo = response.data;
-        });
-    },
-  },
-  mounted() {
-    this.getRoute();
   },
 };
 </script>
@@ -117,6 +67,24 @@ export default {
 
 .md-layout-item {
   width: 10em;
+}
+
+.searchType {
+}
+.routeButton {
+  display: inline-block;
+  border: 1px solid black;
+  width: 7em;
+}
+.stopButton {
+  display: inline-block;
+  border: 1px solid black;
+  width: 7em;
+}
+
+.selected {
+  background-color: blue;
+  color: white;
 }
 
 .display {
