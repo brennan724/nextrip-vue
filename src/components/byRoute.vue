@@ -1,16 +1,19 @@
 <template>
   <div id="byRoute">
-    <dropdown :dropdownData="routeData" @clicked="setRoute" />
+    <dropdown :dropdownData="routeData" @clicked="getDirections" />
     <dropdown
       :dropdownData="directionData"
-      @clicked="setDirection"
+      @clicked="getStops"
       v-show="route !== ''"
     />
     <dropdown
       :dropdownData="stopData"
-      @clicked="setStop"
+      @clicked="getRouteStopInfo"
       v-show="direction !== ''"
     />
+    <div class="error" v-if="error !== undefined">
+      {{ error }}
+    </div>
   </div>
 </template>
 
@@ -31,25 +34,12 @@ export default {
       stopData: [],
       stop: "",
       displayInfo: undefined,
+      error: undefined,
+      display: ["route"],
     };
   },
   methods: {
-    setRoute(route_id) {
-      this.route = route_id;
-      console.log(this.route);
-      this.getDirections();
-    },
-    setDirection(direction_id) {
-      this.direction = direction_id;
-      console.log(this.direction);
-      this.getStops();
-    },
-    setStop(stop_id) {
-      this.stop = stop_id;
-      console.log(this.stop);
-      this.getRouteStopInfo();
-    },
-    getRoute() {
+    getRoutes() {
       axios
         .get(`${url}/routes`)
         .then((response) => {
@@ -58,43 +48,60 @@ export default {
           });
           console.log(this.routeData);
         })
-        .catch((error) => {
-          console.log(error);
+        .catch(() => {
+          this.error = "Failed to fetch Routes";
         });
     },
-    getDirections() {
-      axios.get(`${url}/directions/${this.route}`).then((response) => {
-        this.directionData = response.data.map((direction) => {
-          return {
-            id: direction.direction_id,
-            label: direction.direction_name,
-          };
-        });
-        console.log(this.directionData);
-      });
-    },
-    getStops() {
+    getDirections(route_id) {
       axios
-        .get(`${url}/stops/${this.route}/${this.direction}`)
+        .get(`${url}/directions/${route_id}`)
         .then((response) => {
+          this.route = route_id;
+          console.log(this.route);
+          this.directionData = response.data.map((direction) => {
+            return {
+              id: direction.direction_id,
+              label: direction.direction_name,
+            };
+          });
+          console.log(this.directionData);
+        })
+        .catch(() => {
+          this.error = "Failed to fetch Directions";
+        });
+    },
+    getStops(direction_id) {
+      axios
+        .get(`${url}/stops/${this.route}/${direction_id}`)
+        .then((response) => {
+          this.direction = direction_id;
+          console.log(this.direction);
           this.stopData = response.data.map((stop) => {
             return { id: stop.place_code, label: stop.description };
           });
           console.log(this.stopData);
+        })
+        .catch(() => {
+          this.error = "Failed to fetch Stops";
         });
     },
-    getRouteStopInfo() {
+    getRouteStopInfo(stop_id) {
       axios
-        .get(`${url}/${this.route}/${this.direction}/${this.stop}`)
+        .get(`${url}/${this.route}/${this.direction}/${stop_id}`)
         .then((response) => {
+          this.stop = stop_id;
+          console.log(this.stop);
           console.log(response.data);
           this.displayInfo = response.data;
           this.$emit("routeInfo", this.displayInfo);
+        })
+        .catch(() => {
+          this.error = "Failed to fetch route info for given stop";
         });
     },
   },
   mounted() {
-    this.getRoute();
+    this.getRoutes();
   },
 };
 </script>
