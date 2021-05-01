@@ -16,9 +16,10 @@
 </template>
 
 <script>
-import axios from "axios";
+// import axios from "axios";
+// const url = `https://svc.metrotransit.org/nextripv2`;
+import fetchFromStopNum from "../services/fetchers";
 
-const url = `https://svc.metrotransit.org/nextripv2`;
 export default {
   name: "ByRoute",
   data() {
@@ -28,26 +29,37 @@ export default {
     };
   },
   methods: {
-    validateStop() {
+    async validateStop() {
       if (isNaN(this.stopNum)) {
         this.error = "Stop must be a number";
       } else {
-        console.log(this.stopNum);
+        // console.log(this.stopNum);
         this.getRouteStopInfo();
       }
     },
-    getRouteStopInfo() {
-      axios
-        .get(`${url}/${this.stopNum}`)
-        .then((response) => {
-          this.error = undefined;
-          console.log(response.data);
-          this.displayInfo = response.data;
-          this.$emit("stopInfo", this.displayInfo);
-        })
-        .catch(() => {
-          this.error = "Invalid Stop Number";
-        });
+    async getRouteStopInfo() {
+      try {
+        console.log("trying");
+        // console.log(fetchFromStopNum(this.stopNum));
+        this.displayInfo = await fetchFromStopNum(this.stopNum);
+        console.log(this.displayInfo);
+        this.error = undefined;
+        this.$emit("stopInfo", this.displayInfo);
+      } catch (e) {
+        console.log(e);
+        this.error = "Invalid Stop Number";
+      }
+      // axios
+      //   .get(`${url}/${this.stopNum}`)
+      //   .then((response) => {
+      //     this.error = undefined;
+      //     console.log(response.data);
+      //     this.displayInfo = response.data;
+      //     this.$emit("stopInfo", this.displayInfo);
+      //   })
+      //   .catch(() => {
+      //     this.error = "Invalid Stop Number";
+      //   });
     },
   },
 };
