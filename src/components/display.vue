@@ -60,7 +60,7 @@ export default {
   display: inline-block;
   padding-left: 25%;
 }
-.header {
+.md-table-head-container {
   text-align: center;
 }
 </style>
