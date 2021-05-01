@@ -1,8 +1,8 @@
 <template>
   <div id="dropdown">
     <md-field class="dropdownButton">
-      <label for="selected">Select {{ category }}</label>
-      <md-select v-model="dropdownValue" name="foo">
+      <label for="dropdown-field">Select {{ category }}</label>
+      <md-select id="dropdown-field" v-model="dropdownValue" name="foo">
         <md-option
           v-for="item in populateDropdown"
           :key="item.id"
