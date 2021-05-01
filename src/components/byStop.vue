@@ -2,8 +2,8 @@
   <div id="byStop">
     <form class="md-layout" @submit.prevent="validateStop">
       <md-field class="input-field md-layout-item">
-        <label>Stop #</label>
-        <md-input v-model="stopNum"></md-input>
+        <label for="stop-input">Stop #</label>
+        <md-input id="stop-input" v-model="stopNum"></md-input>
       </md-field>
       <md-button type="submit" class="md-primary md-raised md-layout-item"
         >Submit</md-button
