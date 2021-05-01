@@ -8,7 +8,7 @@
     />
     <dropdown
       :dropdownData="directionData"
-      :selected="directon"
+      :selected="direction"
       :category="category[1]"
       @clicked="getStops"
       v-show="route !== ''"
