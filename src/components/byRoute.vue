@@ -1,13 +1,22 @@
 <template>
   <div id="byRoute">
-    <dropdown :dropdownData="routeData" @clicked="getDirections" />
+    <dropdown
+      :dropdownData="routeData"
+      :selected="route"
+      @clicked="getDirections"
+      :category="category[0]"
+    />
     <dropdown
       :dropdownData="directionData"
+      :selected="directon"
+      :category="category[1]"
       @clicked="getStops"
       v-show="route !== ''"
     />
     <dropdown
       :dropdownData="stopData"
+      :selected="stop"
+      :category="category[2]"
       @clicked="getRouteStopInfo"
       v-show="direction !== ''"
     />
@@ -36,6 +45,7 @@ export default {
       displayInfo: undefined,
       error: undefined,
       display: ["route"],
+      category: ["route", "direction", "stop"],
     };
   },
   methods: {
@@ -53,10 +63,15 @@ export default {
         });
     },
     getDirections(route_id) {
+      if (route_id === "") {
+        return;
+      }
       axios
         .get(`${url}/directions/${route_id}`)
         .then((response) => {
           this.route = route_id;
+          this.direction = "";
+          this.stop = "";
           console.log(this.route);
           this.directionData = response.data.map((direction) => {
             return {
@@ -71,10 +86,14 @@ export default {
         });
     },
     getStops(direction_id) {
+      if (direction_id === "") {
+        return;
+      }
       axios
         .get(`${url}/stops/${this.route}/${direction_id}`)
         .then((response) => {
           this.direction = direction_id;
+          this.stop = "";
           console.log(this.direction);
           this.stopData = response.data.map((stop) => {
             return { id: stop.place_code, label: stop.description };
@@ -86,6 +105,9 @@ export default {
         });
     },
     getRouteStopInfo(stop_id) {
+      if (stop_id === "") {
+        return;
+      }
       axios
         .get(`${url}/${this.route}/${this.direction}/${stop_id}`)
         .then((response) => {

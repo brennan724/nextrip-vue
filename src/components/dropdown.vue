@@ -1,7 +1,7 @@
 <template>
   <div id="dropdown">
     <md-field class="dropdownButton">
-      <label for="selected">Select</label>
+      <label for="selected">Select {{ category }}</label>
       <md-select v-model="dropdownValue" name="foo">
         <md-option
           v-for="item in populateDropdown"
@@ -18,7 +18,7 @@
 <script>
 export default {
   name: "Dropdown",
-  props: ["dropdownData"],
+  props: ["dropdownData", "category", "selected"],
   data() {
     return {};
   },
