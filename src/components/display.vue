@@ -62,5 +62,8 @@ export default {
 }
 .md-table-head-container {
   text-align: center;
+  font-weight: bold;
+  size: 30px;
+  background-color: lightblue;
 }
 </style>

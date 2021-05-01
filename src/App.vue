@@ -3,14 +3,14 @@
     <h1>Welcome to the NexTrip API Knock-off</h1>
     <div class="searchType">
       <div
-        class="routeButton"
+        class="searchSelectionButton"
         :class="this.searchPattern === 'route' ? 'selected' : undefined"
         @click="changeSearch('route')"
       >
         By Route
       </div>
       <div
-        class="stopButton"
+        class="searchSelectionButton"
         :class="this.searchPattern === 'stop' ? 'selected' : undefined"
         @click="changeSearch('stop')"
       >
@@ -76,23 +76,17 @@ export default {
   width: 10em;
 }
 
-.searchType {
-}
-.routeButton {
+.searchSelectionButton {
   display: inline-block;
-  border: 1px solid black;
   width: 7em;
   cursor: pointer;
-}
-.stopButton {
-  display: inline-block;
-  border: 1px solid black;
-  width: 7em;
-  cursor: pointer;
+  background-color: lightblue;
+  font-size: 20px;
+  padding: 1em;
 }
 
 .selected {
-  background-color: blue;
+  background-color: #0093af;
   color: white;
 }
 

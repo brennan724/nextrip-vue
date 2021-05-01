@@ -55,7 +55,7 @@ export default {
 
 <style>
 .md-layout {
-  width: 15em;
+  width: 20%;
   margin: auto;
 }
 
