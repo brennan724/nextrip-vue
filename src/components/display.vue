@@ -9,25 +9,11 @@
           <h3>Stop Id: {{ this.displayInfo.stops[0].stop_id }}</h3>
         </div>
       </div>
-      <md-table class="displayTable">
-        <md-table-row>
-          <md-table-head
-            class="header"
-            v-for="field in this.displayFields"
-            :key="field"
-          >
-            {{ field }}
-          </md-table-head>
-        </md-table-row>
-        <md-table-row
-          v-for="(departure, idx) in this.displayInfo.departures"
-          :key="idx"
-        >
-          <md-table-cell v-for="parsedField in parseFields" :key="parsedField">
-            {{ departure[parsedField] }}
-          </md-table-cell>
-        </md-table-row>
-      </md-table>
+      <v-data-table
+        class="displayTable"
+        :headers="displayFields"
+        :items="displayInfo.departures"
+      ></v-data-table>
     </div>
   </div>
 </template>
@@ -38,7 +24,11 @@ export default {
   props: ["displayInfo"],
   data() {
     return {
-      displayFields: ["Route", "Destination", "Departs"],
+      displayFields: [
+        { text: "Route", value: "route_short_name", class: "header" },
+        { text: "Destination", value: "description", class: "header" },
+        { text: "Departs", value: "departure_text", class: "header" },
+      ],
       parseFields: ["route_short_name", "description", "departure_text"],
     };
   },
@@ -60,10 +50,7 @@ export default {
   display: inline-block;
   padding-left: 25%;
 }
-.md-table-head-container {
-  text-align: center;
-  font-weight: bold;
-  size: 30px;
+.header {
   background-color: lightblue;
 }
 </style>

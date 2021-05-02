@@ -3,22 +3,28 @@ import { render } from '@testing-library/vue'
 import userEvent from '@testing-library/user-event'
 import dropdown from '../../src/components/dropdown.vue';
 import Vue from 'vue'
-import VueMaterial from "vue-material";
+import Vuetify from 'vuetify'
 
-Vue.use(VueMaterial);
+Vue.use(Vuetify);
 
-Vue.config.errorHandler = (err) => {
-  if (process.env.NODE_ENV !== 'production') {
-    // Show any error but this one
-    if (err.message !== "Cannot read property 'badInput' of undefined") {
-      console.error(err);
-    }
-  }
-};
+const renderWithVuetify = (component, options, callback) => {
+  const root = document.createElement('div')
+  root.setAttribute('data-app', 'true')
+  return render(
+    component,
+    {
+      container: document.body.appendChild(root),
+      // for Vuetify components that use the $vuetify instance property
+      vuetify: new Vuetify(),
+      ...options,
+    },
+    callback,
+  )
+}
 
 describe('dropdown component', () => {
   it('should show a dropdown', async () => {
-    const { getByText } = render(dropdown, {
+    const { getByText, debug } = renderWithVuetify(dropdown, {
       props: {
         dropdownData: [{ id: '1', label: 'haha' }, { id: '2', label: 'business' }],
         category: 'first',
@@ -30,7 +36,7 @@ describe('dropdown component', () => {
     userEvent.click(select)
     const hahaField = getByText('haha')
     userEvent.click(hahaField)
-    // debug()
+    debug()
   })
 })
 

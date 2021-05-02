@@ -4,11 +4,11 @@ import { setupServer } from 'msw/node'
 import byStop from '../../src/components/byStop.vue';
 import handlers from '../../src/mocks/handlers'
 import Vue from 'vue'
-import VueMaterial from "vue-material";
+import Vuetify from 'vuetify'
 
 import * as fetchers from '@/services/fetchers'
 
-Vue.use(VueMaterial);
+Vue.use(Vuetify);
 
 const server = setupServer(...handlers)
 
