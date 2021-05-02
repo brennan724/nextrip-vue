@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom'
-import { render } from '@testing-library/vue'
+import { render, waitFor } from '@testing-library/vue'
 import userEvent from '@testing-library/user-event'
 import dropdown from '../../src/components/dropdown.vue';
 import Vue from 'vue'
@@ -24,7 +24,7 @@ const renderWithVuetify = (component, options, callback) => {
 
 describe('dropdown component', () => {
   it('should show a dropdown', async () => {
-    const { getByText, debug } = renderWithVuetify(dropdown, {
+    const { getByText, emitted, debug } = renderWithVuetify(dropdown, {
       props: {
         dropdownData: [{ id: '1', label: 'haha' }, { id: '2', label: 'business' }],
         category: 'first',
@@ -34,23 +34,10 @@ describe('dropdown component', () => {
     const select = getByText('Select first')
     expect(select.value).toBe(undefined)
     userEvent.click(select)
+    await waitFor(() => expect(getByText('haha')).toBeInTheDocument())
     const hahaField = getByText('haha')
     userEvent.click(hahaField)
+    expect(emitted()).toHaveProperty('clicked')
     debug()
   })
 })
-
-
-// function render(Component, options, callbackFunction) {
-//   return {
-//     ...DOMTestingLibraryQueries,
-//     container,
-//     baseElement,
-//     debug,
-//     unmount,
-//     isUnmounted,
-//     html,
-//     emitted,
-//     updateProps,
-//   }
-// }
