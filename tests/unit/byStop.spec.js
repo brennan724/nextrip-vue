@@ -41,6 +41,5 @@ describe('byStop component', () => {
     expect(fetchStopInfoSpy).toHaveBeenCalledTimes(1)
     // wait for the API to come back and things to be emitted
     await waitFor(() => expect(emitted()).toHaveProperty('stopInfo'))
-
   })
 })
