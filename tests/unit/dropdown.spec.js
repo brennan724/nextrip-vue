@@ -7,6 +7,15 @@ import VueMaterial from "vue-material";
 
 Vue.use(VueMaterial);
 
+Vue.config.errorHandler = (err) => {
+  if (process.env.NODE_ENV !== 'production') {
+    // Show any error but this one
+    if (err.message !== "Cannot read property 'badInput' of undefined") {
+      console.error(err);
+    }
+  }
+};
+
 describe('dropdown component', () => {
   it('should show a dropdown', async () => {
     const { getByText } = render(dropdown, {
@@ -19,8 +28,8 @@ describe('dropdown component', () => {
     const select = getByText('Select first')
     expect(select.value).toBe(undefined)
     userEvent.click(select)
-    // const hahaField = getByText('haha')
-    // userEvent.click(hahaField)
+    const hahaField = getByText('haha')
+    userEvent.click(hahaField)
     // debug()
   })
 })

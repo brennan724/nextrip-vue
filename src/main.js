@@ -8,6 +8,15 @@ Vue.use(VueMaterial);
 
 Vue.config.productionTip = false
 
+Vue.config.errorHandler = (err) => {
+  if (process.env.NODE_ENV !== 'production') {
+    // Show any error but this one
+    if (err.message !== "Cannot read property 'badInput' of undefined") {
+      console.error(err);
+    }
+  }
+};
+
 new Vue({
   render: h => h(App),
 }).$mount('#app')
