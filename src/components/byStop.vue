@@ -1,13 +1,19 @@
 <template>
   <div id="byStop">
     <form class="md-layout" @submit.prevent="validateStop">
-      <md-field class="input-field md-layout-item">
+      <v-text-field
+        id="stop-input"
+        v-model="stopNum"
+        label="Stop #"
+      ></v-text-field>
+      <v-btn depressed type="submit" color="primary">Submit</v-btn>
+      <!-- <md-field class="input-field md-layout-item">
         <label for="stop-input">Stop #</label>
         <md-input id="stop-input" v-model="stopNum"></md-input>
-      </md-field>
-      <md-button type="submit" class="md-primary md-raised md-layout-item"
+      </md-field> -->
+      <!-- <md-button type="submit" class="md-primary md-raised md-layout-item"
         >Submit</md-button
-      >
+      > -->
     </form>
     <div class="error" v-if="error !== undefined">
       {{ error }}
