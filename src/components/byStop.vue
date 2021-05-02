@@ -18,7 +18,7 @@
 <script>
 // import axios from "axios";
 // const url = `https://svc.metrotransit.org/nextripv2`;
-import fetchFromStopNum from "../services/fetchers";
+import { fetchFromStopNum } from "../services/fetchers";
 
 export default {
   name: "ByRoute",
@@ -39,10 +39,8 @@ export default {
     },
     async getRouteStopInfo() {
       try {
-        console.log("trying");
         // console.log(fetchFromStopNum(this.stopNum));
         this.displayInfo = await fetchFromStopNum(this.stopNum);
-        console.log(this.displayInfo);
         this.error = undefined;
         this.$emit("stopInfo", this.displayInfo);
       } catch (e) {
