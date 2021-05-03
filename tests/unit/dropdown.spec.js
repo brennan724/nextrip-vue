@@ -24,7 +24,7 @@ const renderWithVuetify = (component, options, callback) => {
 
 describe('dropdown component', () => {
   it('should show a dropdown', async () => {
-    const { getByText, emitted, debug } = renderWithVuetify(dropdown, {
+    const { getByText, emitted } = renderWithVuetify(dropdown, {
       props: {
         dropdownData: [{ id: '1', label: 'haha' }, { id: '2', label: 'business' }],
         category: 'first',
@@ -38,6 +38,5 @@ describe('dropdown component', () => {
     const hahaField = getByText('haha')
     userEvent.click(hahaField)
     expect(emitted()).toHaveProperty('clicked')
-    debug()
   })
 })
