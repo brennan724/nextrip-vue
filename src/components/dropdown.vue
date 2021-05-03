@@ -1,7 +1,6 @@
 <template>
   <div id="dropdown">
     <v-select
-      id="dropdown-field"
       name="dropdown"
       v-model="dropdownValue"
       :items="populateDropdown"
