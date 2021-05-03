@@ -23,7 +23,6 @@ export default {
   },
   computed: {
     populateDropdown() {
-      console.log(this.dropdownData);
       return this.dropdownData;
     },
     dropdownValue: {

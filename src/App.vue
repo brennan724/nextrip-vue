@@ -54,7 +54,6 @@ export default {
   methods: {
     setDisplayInfo(val) {
       this.displayInfo = val;
-      console.log(this.displayInfo);
     },
     changeSearch(val) {
       this.searchPattern = val;

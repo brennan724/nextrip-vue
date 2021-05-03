@@ -6,9 +6,6 @@ import Vuetify from 'vuetify'
 
 Vue.use(Vuetify);
 new Vuetify({})
-// createLocalVue(
-//   { vuetify }
-// )
 
 const renderWithVuetify = (component, options, callback) => {
   const root = document.createElement('div')
