@@ -1,5 +1,11 @@
 import { rest } from 'msw'
 
+/**
+ * the API mocking file
+ * The get route info from stop needs to be at the end, otherwise
+ * it's generic enough to take stand in for any other api path
+ */
+
 const url = `https://svc.metrotransit.org/nextripv2`;
 export default [
   // get all routes

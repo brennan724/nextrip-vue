@@ -53,6 +53,8 @@ export default {
     };
   },
   methods: {
+    // get routes to populate the first dropdown
+    // called by created()
     async getRoutes() {
       try {
         const response = await fetchRoutes();
@@ -64,6 +66,7 @@ export default {
         this.error = "Failed to fetch Routes";
       }
     },
+    // get directions to populate the second dropdown
     async getDirections(route_id) {
       if (route_id === "") {
         return;
@@ -84,6 +87,7 @@ export default {
         this.error = "Failed to fetch Directions";
       }
     },
+    // get stops to populate the third dropdown
     async getStops(direction_id) {
       if (direction_id === "") {
         return;
@@ -100,6 +104,8 @@ export default {
         this.error = "Failed to fetch Stops";
       }
     },
+    // get the route info for the stop once all the relevant info is collected
+    // emit the data back to App.vue to be rendered
     async getRouteStopInfo(stop_id) {
       if (stop_id === "") {
         return;

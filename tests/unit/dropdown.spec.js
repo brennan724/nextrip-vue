@@ -31,12 +31,15 @@ describe('dropdown component', () => {
         selected: '',
       }
     })
+    // find the dropdown and make sure it's empty
     const select = getByText('Select first')
     expect(select.value).toBe(undefined)
+    // click the dropdown and then select one of the options
     userEvent.click(select)
     await waitFor(() => expect(getByText('haha')).toBeInTheDocument())
     const hahaField = getByText('haha')
     userEvent.click(hahaField)
+    // check that the dropdown emits properly to whatever called it
     expect(emitted()).toHaveProperty('clicked')
   })
 })

@@ -32,9 +32,6 @@ export default {
       parseFields: ["route_short_name", "description", "departure_text"],
     };
   },
-  computed: {},
-  watch: {},
-  methods: {},
 };
 </script>
 

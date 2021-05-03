@@ -46,11 +46,15 @@ describe('display component', () => {
         }
       }
     })
+    // check that the header text exists, and is there only once
     const beginning = getAllByText('the beginning')
     expect(beginning.length).toBe(1)
+    // check that the stop ID is there and it's the right number
     const stop = getAllByText(/Stop Id/)
     expect(stop.length).toBe(1)
     expect(stop[0]).toHaveTextContent('1001')
+    // check that the route info, stop info, and minutes to arrival
+    //  are there the proper number of times
     const route = getAllByText('road to nowhere')
     expect(route.length).toBe(2)
     const stops = getAllByText(/stop/)

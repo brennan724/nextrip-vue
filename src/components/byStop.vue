@@ -33,6 +33,7 @@ export default {
         this.getRouteStopInfo();
       }
     },
+    // this not take into account network outages
     async getRouteStopInfo() {
       try {
         this.displayInfo = await fetchFromStopNum(this.stopNum);
