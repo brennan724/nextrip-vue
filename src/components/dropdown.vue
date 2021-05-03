@@ -1,17 +1,14 @@
 <template>
   <div id="dropdown">
-    <md-field class="dropdownButton">
-      <label for="dropdown-field">Select {{ category }}</label>
-      <md-select id="dropdown-field" v-model="dropdownValue" name="foo">
-        <md-option
-          v-for="item in populateDropdown"
-          :key="item.id"
-          :value="item.id"
-        >
-          {{ item.label }}
-        </md-option>
-      </md-select>
-    </md-field>
+    <v-select
+      name="dropdown"
+      v-model="dropdownValue"
+      :items="populateDropdown"
+      item-text="label"
+      item-value="id"
+      :label="label"
+    >
+    </v-select>
   </div>
 </template>
 
@@ -20,7 +17,9 @@ export default {
   name: "Dropdown",
   props: ["dropdownData", "category", "selected"],
   data() {
-    return {};
+    return {
+      label: `Select ${this.category}`,
+    };
   },
   computed: {
     populateDropdown() {
@@ -38,8 +37,8 @@ export default {
 };
 </script>
 
-<style scoped>
-.dropdownButton {
+<style>
+#dropdown {
   width: 20%;
   margin: auto;
 }

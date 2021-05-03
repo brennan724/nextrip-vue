@@ -1,38 +1,40 @@
 <template>
-  <div id="app">
-    <h1>Welcome to the NexTrip API Knock-off</h1>
-    <div class="searchType">
-      <div
-        class="searchSelectionButton"
-        :class="this.searchPattern === 'route' ? 'selected' : undefined"
-        @click="changeSearch('route')"
-      >
-        By Route
+  <v-app>
+    <div id="app">
+      <h1>Welcome to the NexTrip API Knock-off</h1>
+      <div class="searchType">
+        <div
+          class="searchSelectionButton"
+          :class="this.searchPattern === 'route' ? 'selected' : undefined"
+          @click="changeSearch('route')"
+        >
+          By Route
+        </div>
+        <div
+          class="searchSelectionButton"
+          :class="this.searchPattern === 'stop' ? 'selected' : undefined"
+          @click="changeSearch('stop')"
+        >
+          By Stop #
+        </div>
       </div>
-      <div
-        class="searchSelectionButton"
-        :class="this.searchPattern === 'stop' ? 'selected' : undefined"
-        @click="changeSearch('stop')"
-      >
-        By Stop #
-      </div>
+      <by-route
+        class="routeSelection"
+        @routeInfo="setDisplayInfo"
+        v-if="this.searchPattern === 'route'"
+      />
+      <by-stop
+        class="stopSelection"
+        @stopInfo="setDisplayInfo"
+        v-if="this.searchPattern === 'stop'"
+      />
+      <display
+        class="display"
+        :displayInfo="this.displayInfo"
+        v-if="displayInfo !== undefined"
+      />
     </div>
-    <by-route
-      class="routeSelection"
-      @routeInfo="setDisplayInfo"
-      v-if="this.searchPattern === 'route'"
-    />
-    <by-stop
-      class="stopSelection"
-      @stopInfo="setDisplayInfo"
-      v-if="this.searchPattern === 'stop'"
-    />
-    <display
-      class="display"
-      :displayInfo="this.displayInfo"
-      v-if="displayInfo !== undefined"
-    />
-  </div>
+  </v-app>
 </template>
 
 <script>
@@ -52,7 +54,6 @@ export default {
   methods: {
     setDisplayInfo(val) {
       this.displayInfo = val;
-      console.log(this.displayInfo);
     },
     changeSearch(val) {
       this.searchPattern = val;
@@ -70,10 +71,6 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
-}
-
-.md-layout-item {
-  width: 10em;
 }
 
 .searchSelectionButton {

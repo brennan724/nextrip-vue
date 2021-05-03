@@ -1,24 +1,30 @@
 import '@testing-library/jest-dom'
-import { render } from '@testing-library/vue'
+import { render, waitFor } from '@testing-library/vue'
 import userEvent from '@testing-library/user-event'
 import dropdown from '../../src/components/dropdown.vue';
 import Vue from 'vue'
-import VueMaterial from "vue-material";
+import Vuetify from 'vuetify'
 
-Vue.use(VueMaterial);
+Vue.use(Vuetify);
 
-Vue.config.errorHandler = (err) => {
-  if (process.env.NODE_ENV !== 'production') {
-    // Show any error but this one
-    if (err.message !== "Cannot read property 'badInput' of undefined") {
-      console.error(err);
-    }
-  }
-};
+const renderWithVuetify = (component, options, callback) => {
+  const root = document.createElement('div')
+  root.setAttribute('data-app', 'true')
+  return render(
+    component,
+    {
+      container: document.body.appendChild(root),
+      // for Vuetify components that use the $vuetify instance property
+      vuetify: new Vuetify(),
+      ...options,
+    },
+    callback,
+  )
+}
 
 describe('dropdown component', () => {
   it('should show a dropdown', async () => {
-    const { getByText } = render(dropdown, {
+    const { getByText, emitted } = renderWithVuetify(dropdown, {
       props: {
         dropdownData: [{ id: '1', label: 'haha' }, { id: '2', label: 'business' }],
         category: 'first',
@@ -28,23 +34,9 @@ describe('dropdown component', () => {
     const select = getByText('Select first')
     expect(select.value).toBe(undefined)
     userEvent.click(select)
+    await waitFor(() => expect(getByText('haha')).toBeInTheDocument())
     const hahaField = getByText('haha')
     userEvent.click(hahaField)
-    // debug()
+    expect(emitted()).toHaveProperty('clicked')
   })
 })
-
-
-// function render(Component, options, callbackFunction) {
-//   return {
-//     ...DOMTestingLibraryQueries,
-//     container,
-//     baseElement,
-//     debug,
-//     unmount,
-//     isUnmounted,
-//     html,
-//     emitted,
-//     updateProps,
-//   }
-// }
