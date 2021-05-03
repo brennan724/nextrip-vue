@@ -156,8 +156,6 @@ export default {
           stop_id
         );
         this.stop = stop_id;
-        console.log(this.stop);
-        console.log(response);
         this.displayInfo = response;
         this.$emit("routeInfo", this.displayInfo);
       } catch (e) {

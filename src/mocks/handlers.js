@@ -47,6 +47,26 @@ export default [
       ])
     )
   }),
+  // get route info from route, direction, and stop info
+  rest.get(`${url}/:routeId/:directionId/:stopId`, (req, res, ctx) => {
+    return res(
+      ctx.json({
+        stops: [{
+          stop_id: 10000,
+          description: 'First Stop'
+        }],
+        departures: [{
+          stop_id: 10000,
+          departure_text: '2 mins',
+          description: 'to infinity and beyond',
+          route_id: '1',
+          route_short_name: 'first route',
+          direction_id: 1,
+          direction_text: 'west',
+        }]
+      })
+    )
+  }),
   // get route info by stop
   rest.get(`${url}/:stopNum`, (req, res, ctx) => {
     return res(

@@ -14,6 +14,7 @@ const server = setupServer(...handlers)
 const fetchRoutesSpy = jest.spyOn(fetchers, 'fetchRoutes')
 const fetchDirectionsSpy = jest.spyOn(fetchers, 'fetchDirections')
 const fetchStopsSpy = jest.spyOn(fetchers, 'fetchStops')
+const fetchRouteStopInfoSpy = jest.spyOn(fetchers, 'fetchRouteStopInfo')
 
 Vue.use(Vuetify);
 
@@ -47,7 +48,7 @@ afterAll(() => {
 
 describe('byRoute component', () => {
   it('clicks in fields and emits route stop info at the end.', async () => {
-    const { getByLabelText, getByText, emitted, debug } = renderWithVuetify(byRoute)
+    const { getByLabelText, getByText, emitted } = renderWithVuetify(byRoute)
     // get the routes
     await waitFor(() => expect(getByLabelText('Select route')).toBeInTheDocument())
     expect(fetchRoutesSpy).toBeCalledTimes(1)
@@ -70,20 +71,7 @@ describe('byRoute component', () => {
     await waitFor(() => expect(getByText('first stop')).toBeInTheDocument())
     userEvent.click(getByText('first stop'))
     // get the route stop info
-    // await waitFor(() => expect(emitted()).toHaveProperty('routeInfo'))
-
-
-    // type in field
-    // const textfield = getByLabelText('Stop #')
-    // await fireEvent.update(textfield, '123')
-    // expect(textfield.value).toEqual('123')
-    // //hit submit button
-    // const submitButton = getByText('Submit')
-    // await fireEvent.click(submitButton)
-    // // check that the API has been called
-    // expect(fetchStopInfoSpy).toHaveBeenCalledTimes(1)
-    // // wait for the API to come back and things to be emitted
-    // await waitFor(() => expect(emitted()).toHaveProperty('stopInfo'))
-    debug()
+    await waitFor(() => expect(emitted()).toHaveProperty('routeInfo'))
+    expect(fetchRouteStopInfoSpy).toBeCalledTimes(1)
   })
 })
