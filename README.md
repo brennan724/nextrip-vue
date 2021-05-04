@@ -41,4 +41,4 @@ yarn test:unit
 ## Notes
 * Works on mobile (if deployed to a place where a mobile browser can access it)
 * Testing only currently tests happy paths
-* Vue-material branch uses vue-material, but vue-material has a [bug](https://github.com/vuematerial/vue-material/issues/2285) which makes testing difficult
+* Vue-material branch uses vue-material, but vue-material has a [bug](https://github.com/vuematerial/vue-material/issues/2285) which makes testing difficult.  Therefore, I switched to using Vuetify partway through the project.
