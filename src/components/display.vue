@@ -13,6 +13,7 @@
         class="displayTable"
         :headers="displayFields"
         :items="displayInfo.departures"
+        :disable-sort="true"
       ></v-data-table>
     </div>
   </div>
