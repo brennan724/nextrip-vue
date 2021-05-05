@@ -4,6 +4,14 @@ import 'vuetify/dist/vuetify.min.css'
 
 Vue.use(Vuetify)
 
-const opts = {}
+const opts = {
+  defaultAssets: {
+    font: true,
+    icons: 'md'
+  },
+  icons: {
+    iconfont: 'mdiSvg',
+  }
+}
 
 export default new Vuetify(opts)
